@@ -1,0 +1,18 @@
+/* src/index.css */
+@import "tailwindcss";
+
+@layer base {
+	body {
+		@apply bg-[#121418] text-white antialiased;
+	}
+}
+
+.glass-card {
+	background: rgba(30, 34, 41, 0.7);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.progress-glow {
+	box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+}
