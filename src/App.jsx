@@ -16,18 +16,46 @@ function App() {
 
 	const [llmStatus, setLlmStatus] = useState("");
 
+	const hasInitialized = useRef(false); // 상단에 추가
+
 	// AI 엔진 예열 확인
 	useEffect(() => {
-		initLLM((p) => {
-			setLlmProgress(Math.round(p.progress * 100));
-			if (p.progress === 1) {
-				setLlmReady(true);
-				setLlmStatus("AI 코치 준비 완료");
-			} else {
-				setLlmStatus(`AI 엔진 로딩 중... (${Math.round(p.progress * 100)}%)`);
+		if (hasInitialized.current) return; // 이미 실행 중이면 차단
+		hasInitialized.current = true;
+
+		const startLLM = async () => {
+			try {
+				await initLLM((p) => {
+					const progress = Math.round(p.progress * 100);
+					setLlmProgress(progress);
+
+					if (progress >= 100) {
+						setLlmReady(true);
+						setLlmStatus("AI 코치 준비 완료");
+					} else {
+						setLlmStatus(`AI 엔진 로딩 중... (${progress}%)`);
+					}
+				});
+			} catch (err) {
+				console.error("엔진 로드 실패:", err);
+				setLlmStatus("AI 엔진 로드 중 오류가 발생했습니다.");
+				hasInitialized.current = false; // 에러 시 재시도 가능하게
 			}
-		});
+		};
+
+		startLLM();
 	}, []);
+	// useEffect(() => {
+	// 	initLLM((p) => {
+	// 		setLlmProgress(Math.round(p.progress * 100));
+	// 		if (p.progress === 1) {
+	// 			setLlmReady(true);
+	// 			setLlmStatus("AI 코치 준비 완료");
+	// 		} else {
+	// 			setLlmStatus(`AI 엔진 로딩 중... (${Math.round(p.progress * 100)}%)`);
+	// 		}
+	// 	});
+	// }, []);
 
 	const handleStartAnalysis = async () => {
 		if (!llmReady) return; // 준비 안 되면 클릭 불가
@@ -254,8 +282,8 @@ function App() {
 						onClick={handleStartAnalysis}
 						disabled={!llmReady || isAnalyzing || !videoUrl || !sheetUrl}
 						className={`w-full mt-6 py-6 font-black text-xl rounded-2xl shadow-2xl transition-all transform active:scale-95 ${llmReady && !isAnalyzing
-								? "bg-emerald-500 text-black hover:bg-emerald-400"
-								: "bg-gray-800 text-gray-500 cursor-not-allowed"
+							? "bg-emerald-500 text-black hover:bg-emerald-400"
+							: "bg-gray-800 text-gray-500 cursor-not-allowed"
 							}`}
 					>
 						{!llmReady
