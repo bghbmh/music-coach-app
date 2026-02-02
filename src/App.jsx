@@ -227,7 +227,14 @@ function App() {
 						)}
 
 						{videoUrl ? (
-							<video ref={videoRef} src={videoUrl} className="w-full h-full object-cover rounded-2xl" controls />
+							<video
+								ref={videoRef}
+								src={videoUrl}
+								className="w-full h-full object-cover rounded-2xl"
+								controls
+								playsInline        // 👈 추가: 전체화면 방지 (매우 중요)
+								webkit-playsinline // 👈 추가: iOS 웹킷 지원
+							/>
 						) : (
 							<div className="w-full h-full flex flex-col items-center justify-center text-gray-500">
 								<div className="w-16 h-16 border-2 border-dashed border-gray-700 rounded-full mb-4" />
@@ -267,7 +274,7 @@ function App() {
 								<p className="text-xs text-emerald-500/60 mt-4">AI 코치가 조언을 정리하고 있습니다...</p>
 							</div>
 						) : (
-							<p className="text-xl text-emerald-400 font-medium leading-relaxed italic">
+							<p className="text-xs text-emerald-400 font-medium leading-relaxed italic">
 								"{metrics.dynamicFeedback}"
 							</p>
 						)}
