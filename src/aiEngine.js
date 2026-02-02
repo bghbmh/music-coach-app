@@ -1,9 +1,9 @@
 // src/aiEngine.js
 import { CreateMLCEngine } from "@mlc-ai/web-llm";
 
-const selectedModel = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
+//const selectedModel = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
 //const selectedModel = "gemma-2b-it-q4f16_1-MLC";
-//const selectedModel = "TinyLlama-1.1B-Chat-v1.0-q4f16_1-MLC"; // 매우 가벼움 - TinyLlama
+const selectedModel = "TinyLlama-1.1B-Chat-v1.0-q4f16_1-MLC"; // 매우 가벼움 - TinyLlama
 //const selectedModel = "Qwen2-0.5B-Instruct-q4f16_1-MLC"; //가장 가벼움 - Qwen
 
 
