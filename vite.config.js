@@ -7,6 +7,9 @@ export default defineConfig({
 		react(),
 		VitePWA({
 			registerType: 'autoUpdate',
+			workbox: {
+				maximumFileSizeToCacheInBytes: 8 * 1024 * 1024, // 제한을 8MB로 상향 (7.18MB 대응)
+			},
 			manifest: {
 				name: 'Virtousto Music Coach',
 				short_name: 'MusicCoach',
