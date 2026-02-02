@@ -74,15 +74,15 @@ function App() {
 	const videoRef = useRef(null);
 	const detectorRef = useRef(null);
 
-	useEffect(() => {
-		const init = async () => {
-			await tf.ready();
-			detectorRef.current = await poseDetection.createDetector(
-				poseDetection.SupportedModels.MoveNet
-			);
-		};
-		init();
-	}, []);
+	// useEffect(() => {
+	// 	const init = async () => {
+	// 		await tf.ready();
+	// 		detectorRef.current = await poseDetection.createDetector(
+	// 			poseDetection.SupportedModels.MoveNet
+	// 		);
+	// 	};
+	// 	init();
+	// }, []);
 
 	// 실제 분석 엔진: 고정값이 아닌 파일 데이터를 연산
 	const analyzeFiles = async () => {
@@ -121,7 +121,7 @@ function App() {
 				const pitch = detectPitch(dataArray);
 
 				// 포즈(자세) 추출
-				const poses = await detectorRef.current.estimatePoses(videoRef.current);
+				//const poses = await detectorRef.current.estimatePoses(videoRef.current);
 
 				// 비교 로직: 현재 음정(pitch)과 악보에서 예상되는 음정(sheetData) 대조
 				// (여기서는 예시로 검출된 음정이 유효한지 위주로 계산)
